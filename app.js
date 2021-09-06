@@ -1,11 +1,13 @@
+require("dotenv").config();
 const express = require("express")
 const mongoose = require("mongoose")
 const app = express()
 app.use(express.static("client"))
 app.use(express.json())
 const port = process.env.PORT || 3000
+const mongo_uri = process.env.MONGO_URI
 
-mongoose.connect('mongodb+srv://admin-somnath:dxecjjimjUGcCwTB@cluster0.zomkj.mongodb.net/flashcardDb?retryWrites=true&w=majority');
+mongoose.connect(mongo_uri);
 const userSchema = new mongoose.Schema({
     email: String,
     questions:[
