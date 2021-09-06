@@ -2,7 +2,8 @@ body{
     font-family: 'Montserrat', sans-serif;
 }
 .focus-container{
-    background-color: rgb(28, 28, 28);
+    /* background-color: rgb(28, 28, 28); */
+    background-color: red;
     opacity: 0.85;
 }
 ::placeholder{
