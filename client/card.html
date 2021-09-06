@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/86ee6ee1a0.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet"> 
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet"> 
+    <link rel="stylesheet" href="css/style.css">
+    <title>Flash Card</title>
+</head>
+<body onload="getQuestions()">
+    <div id="newCard" class="new-card">
+        <div class="flex flex-col mx-10">
+            <input id="newQuestion" class="mt-10 text-2xl" type="text" placeholder="Type the question">
+            <textarea id="newAnswer" class="text-xl mt-5" name="" id="" cols="30" rows="10"></textarea>
+            <button onclick="addQuestion()" class="bg-indigo-400 rounded py-2 text-2xl mt-5">Add</button>
+            <button onclick="closeNav()" class="bg-indigo-400 rounded py-2 text-2xl mt-5">Close</button>
+        </div>
+    </div>
+    <div id="main" class="w-screen h-screen">
+        <div class="bg-indigo-400 rounded mx-7 h-4/5 mt-5 shadow-2xl">
+            <h2 id="question" class="text-2xl font-bold text-center pt-5">What is ISRO</h2>
+            <p id="answer" class="text-xl"></p>
+        </div>
+        <div class="flex justify-between px-10 pt-10">
+            <i class="far fa-times-circle text-6xl"></i>
+            <i onclick="openNav()" class="far fa-plus-square text-6xl"></i>
+            <i class="far fa-check-circle text-6xl"></i>
+        </div>
+    </div>
+    <script src="js/card.js"></script>
+</body>
+</html>

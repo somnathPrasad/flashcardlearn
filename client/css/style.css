@@ -1,0 +1,21 @@
+body{
+    font-family: 'Montserrat', sans-serif;
+}
+.focus-container{
+    background-color: rgb(28, 28, 28);
+    opacity: 0.85;
+}
+::placeholder{
+    text-align: center;
+}
+.new-card {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0; 
+    left: 0;
+    right: 0;
+    overflow-x: hidden;
+    transition: 0.5s;
+  }
