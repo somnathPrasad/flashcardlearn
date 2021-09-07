@@ -1,6 +1,8 @@
 var questionNo = 0;
 var questionSet = [];
 var crossButtonCount = 0;
+var removedQuestionIndex = [];
+
 function openNav() {
     document.getElementById("newCard").style.width = "100%";
     document.getElementById("main").style.marginLeft = "100%";
@@ -13,6 +15,8 @@ function closeNav() {
    document.getElementById("main").style.display = "block"
 }
 
+
+//triggers on Adding a new question
 function addQuestion(){
   var newQuestion = document.getElementById("newQuestion").value;
   var newAnswer = document.getElementById("newAnswer").value
@@ -42,13 +46,17 @@ async function sendQuestionSet(data){
   if(res !== {}){
     removeLoaderAnimation("loader_addQuestion")
     closeNav()
-    questionSet = res;
+    questionSet = res; //this will set the questionSet array back to everything.
+    removedQuestionIndex.forEach(index=>{  
+      questionSet.splice(index,1) //removing questions that were previously removed from question set
+    })
   }
 }
 
+//triggers from login.js file when user login
 function getQuestions(){
   questionSet = JSON.parse(sessionStorage.getItem("questions"))
-  makeCard(questionSet)
+  makeCard(questionSet) 
 }
 
 function makeCard(questionSet){
@@ -59,21 +67,18 @@ function makeCard(questionSet){
 }
 
 function handleCheckButton(){
-  questionSet.splice(questionNo, 1);
-  try {
-    questionNo++;
-    console.log(questionNo)
+  if(questionSet.length <= 1){ //if there is only one question in the array
+    openNav()
     makeCard(questionSet)
-  } 
-  catch (error) {
-    questionNo=0;
-    makeCard(questionSet)
-    console.log(error)
-    // openNav()
-  }
-  finally{
-    document.getElementById("answer").style.display = "none"
-    crossButtonCount = 0;
+  }else{     //if there are more than one question
+    try {
+      questionSet.splice(questionNo, 1); //remove the question from questionSet
+      removedQuestionIndex.push(questionNo) //storing the index of removed question to use it when questionSet array is refreshed
+      makeCard(questionSet)
+    } catch (error) {
+      console.log(error)
+      questionNo--;
+    }
   }
 }
 function handleCrossButton(){
@@ -88,7 +93,6 @@ function handleCrossButton(){
       questionNo=0;
       makeCard(questionSet)
       console.log(error)
-      // openNav()
     }
     finally{
       crossButtonCount = 0;
