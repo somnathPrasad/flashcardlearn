@@ -19,3 +19,25 @@ body{
     overflow-x: hidden;
     transition: 0.5s;
   }
+
+.card{
+    background-image: linear-gradient(to bottom right, 
+    #fafaf7
+    , #b8e2ff);
+    border: 1px solid #0079cc;
+}
+input,textarea{
+    border: 1px solid #0079cc;
+}
+
+button{
+    border: 1px solid #0079cc;
+    background-color: #b8e2ff;
+}
+
+#main button :hover{
+    background-color: #152896;
+}
+#main button span :hover{
+    background-color: #b8e2ff;
+}

@@ -97,8 +97,10 @@ function handleCrossButton(){
     finally{
       crossButtonCount = 0;
       document.getElementById("answer").style.display = "none"
+      document.getElementById("question").style.display = "block"
     }
   }else{
     document.getElementById("answer").style.display = "block"
+    document.getElementById("question").style.display = "none"
   }
 }
