@@ -68,6 +68,10 @@ function handleCheckButton(){
     console.log(error)
     openNav()
   }
+  finally{
+    document.getElementById("answer").style.display = "none"
+    crossButtonCount = 0;
+  }
 }
 function handleCrossButton(){
   crossButtonCount++;
