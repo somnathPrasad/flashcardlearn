@@ -57,16 +57,36 @@ function makeCard(questionSet){
 }
 
 function handleCheckButton(){
-  questionNo++;
-  makeCard(questionSet)
+  try {
+    questionNo++;
+    console.log(questionNo)
+    makeCard(questionSet)
+  } 
+  catch (error) {
+    questionNo--;
+    makeCard(questionSet)
+    console.log(error)
+    openNav()
+  }
 }
 function handleCrossButton(){
   crossButtonCount++;
   if(crossButtonCount === 2){
-    questionNo++;
-    makeCard(questionSet)
-    crossButtonCount = 0;
-    document.getElementById("answer").style.display = "none"
+    try {
+      questionNo++;
+      console.log(questionNo)
+      makeCard(questionSet)
+    } 
+    catch (error) {
+      questionNo--;
+      makeCard(questionSet)
+      console.log(error)
+      openNav()
+    }
+    finally{
+      crossButtonCount = 0;
+      document.getElementById("answer").style.display = "none"
+    }
   }else{
     document.getElementById("answer").style.display = "block"
   }
