@@ -36,9 +36,11 @@ async function sendQuestionSet(data){
     },
     body:JSON.stringify(payload)
   }
+  setLoaderAnimation("loader_addQuestion")
   const response = await fetch("/addQuestion",options)
   var res = await response.json()
   if(res !== {}){
+    removeLoaderAnimation("loader_addQuestion")
     closeNav()
     questionSet = res;
   }

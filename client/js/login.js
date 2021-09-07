@@ -19,10 +19,12 @@ async function sendUserData(data){
     },
     body:JSON.stringify(payload)
   }
+  setLoaderAnimation("loader_login")
   const response = await fetch("/user",options)
   const userData = await response.json()
   if(userData !== {}){
     showCards(userData)
+    removeLoaderAnimation("loader_login")
   }
 }
 
@@ -32,6 +34,17 @@ function showCards(data){
   document.getElementById("loginScreen").style.display = "none";
   document.getElementById("content").style.display = "block"
   getQuestions()
+}
+
+function setLoaderAnimation(id){
+  var loader = document.getElementById(id)
+  loader.style.display = "block"
+  document.getElementById("loginBtn").disabled = true;
+}
+function removeLoaderAnimation(id){
+  var loader = document.getElementById(id)
+  loader.style.display = "none"
+  document.getElementById("loginBtn").disabled = false;
 }
 
 
