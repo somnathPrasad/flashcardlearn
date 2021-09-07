@@ -59,16 +59,17 @@ function makeCard(questionSet){
 }
 
 function handleCheckButton(){
+  questionSet.splice(questionNo, 1);
   try {
     questionNo++;
     console.log(questionNo)
     makeCard(questionSet)
   } 
   catch (error) {
-    questionNo--;
+    questionNo=0;
     makeCard(questionSet)
     console.log(error)
-    openNav()
+    // openNav()
   }
   finally{
     document.getElementById("answer").style.display = "none"
@@ -84,10 +85,10 @@ function handleCrossButton(){
       makeCard(questionSet)
     } 
     catch (error) {
-      questionNo--;
+      questionNo=0;
       makeCard(questionSet)
       console.log(error)
-      openNav()
+      // openNav()
     }
     finally{
       crossButtonCount = 0;
