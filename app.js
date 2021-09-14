@@ -8,6 +8,8 @@ const passport = require("passport")
 const passportLocalMongoose = require("passport-local-mongoose")
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const findOrCreate = require("mongoose-findorcreate")
+const port = process.env.PORT || 3000;
+const googleCallbackUrl = process.env.GOOGLE_CALLBACK_URL || "http://localhost:3000/auth/google/flashcard"
 
 // MIDDLEWARES
 app.use(express.static("public"))
@@ -62,7 +64,7 @@ passport.serializeUser(function(user, done) {
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/flashcard",
+    callbackURL: googleCallbackUrl,
     userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
   },
   function(accessToken, refreshToken, profile, cb) {
@@ -132,6 +134,6 @@ app.post("/addQuestion/id/:id", (req, res) => {
 app.use(function (req, res, next) {
   res.status(404).send("Sorry can't find that!");
 });
-app.listen(3000,()=>{
-    console.log("started")
-})
+app.listen(port, () =>
+  console.log(`Flashcard server started listning on port ${port}`)
+);
