@@ -1,0 +1,38 @@
+<%- include('partials/header') %>
+<div id="newCard" class="new-card">
+    <div>
+        <input class="rounded" id="newQuestion" type="text" placeholder="Type the question" required>
+        <textarea class="rounded" id="newAnswer" name="" id="" cols="30" rows="10" required></textarea>
+        <button onclick="addQuestion()" class="rounded btn btn-primary">Add</button>
+        <button onclick="closeNav()" class="rounded btn btn-primary">Close</button>
+    </div>
+</div>
+<div id="main" class="card-body focus-window">
+    <div class="card-wrapper">
+        <h2 id="question">What is ISRO ?</h2>
+        <p id="answer" style="display: none;">ISRO is a indian space research organisation</p>
+    </div>
+    <div class="card-btns">
+        <button class="btn btn-primary" onclick="flipCard()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-right" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z"/>
+        </svg>
+        Flip Card
+    </button>
+    <button class="btn btn-primary" onclick="openNav()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-plus-fill" viewBox="0 0 16 16">
+            <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM8.5 6v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 1 0z"/>
+          </svg>
+        Add Card
+    </button>
+    <button class="btn btn-primary" onclick="handleCheckButton()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-check-fill" viewBox="0 0 16 16">
+            <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm-1.146 6.854-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
+          </svg>
+        I Know
+    </button>
+    </div>
+</div>
+
+<script src="/js/card.js"></script>
+<%- include('partials/footer') %>
