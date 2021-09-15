@@ -3,93 +3,49 @@ const express = require("express")
 const app = express()
 const mongoose = require("mongoose")
 const ejs = require("ejs")
-const session = require("express-session")
 const passport = require("passport")
-const passportLocalMongoose = require("passport-local-mongoose")
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const findOrCreate = require("mongoose-findorcreate")
 const port = process.env.PORT || 3000;
-const googleCallbackUrl = process.env.GOOGLE_CALLBACK_URL || "http://localhost:3000/auth/google/flashcard"
+const cookieSession = require('cookie-session')
+require("./passport_setup")
+const User = require("./model")
 
 // MIDDLEWARES
 app.use(express.static("public"))
 app.set("view engine", "ejs")
 app.use(express.json())
-app.use(session({
-    secret: "oZJsYG+)#7kW7",
-    resave: false,
-    saveUninitialized: false
-}));
+app.use(cookieSession({
+  name: 'flashcard-session',
+  keys: ['key1', 'key2']
+}))
 app.use(passport.initialize())
 app.use(passport.session())
 
-mongoose.connect(process.env.MONGO_URI);
-
-const userSchema = new mongoose.Schema({
-  email: {
-    type:String,
-    unique:true
-  },
-  googleId:{
-    type:String,
-    unique:true
-  },
-  questions: [
-    {
-      question: String,
-      answer: String,
-    },
-  ],
-});
-
-userSchema.plugin(passportLocalMongoose)
-userSchema.plugin(findOrCreate)
-
-const User = new mongoose.model("User", userSchema);
-
-
-passport.use(User.createStrategy());
-passport.serializeUser(function(user, done) {
-    done(null, user.id);
-  });
-  
-  passport.deserializeUser(function(id, done) {
-    User.findById(id, function(err, user) {
-      done(err, user);
-    });
-  });
-
-
-//PASSPORT GOOGLE STRATEGY
-passport.use(new GoogleStrategy({
-    clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: googleCallbackUrl,
-    userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
-  },
-  function(accessToken, refreshToken, profile, cb) {
-    User.findOrCreate({ googleId: profile.id }, function (err, user) {
-      return cb(err, user);
-    });
+const isLoggedIn = (req,res,next)=>{
+  if(req.user){
+    next();
+  }else{
+    res.sendStatus(401)
   }
-));
+}
+
+mongoose.connect(process.env.MONGO_URI);
 
 app.get("/",(req,res)=>{
     res.render("login")
 });
 
 app.get('/auth/google',
-  passport.authenticate('google', { scope: ['profile'] })
+  passport.authenticate('google', { scope: ['profile','email'] })
 );
+
 app.get('/auth/google/flashcard',
 passport.authenticate('google', { failureRedirect: '/' }),
   function(req, res) {
-    // console.log(req.user.googleId)
+    console.log(req.user)
     res.redirect(`/cards/id/${req.user.googleId}`);
   });
 
-app.get("/cards/id/:googleId",(req,res)=>{
-    if(req.isAuthenticated()){
+app.get("/cards/id/:googleId",isLoggedIn,(req,res)=>{
       var googleId = req.params.googleId;
       User.findOne({googleId:googleId}, function(err, result){
         if(result.questions.length === 0){
@@ -101,7 +57,6 @@ app.get("/cards/id/:googleId",(req,res)=>{
           res.render("card")
         }
     })
-    }
 })
 
 app.get("/questions/id/:id",(req,res)=>{
