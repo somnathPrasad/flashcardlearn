@@ -34,7 +34,7 @@ function openNav() {
 function closeNav() {
    document.getElementById("newCard").style.width = "0";
    document.getElementById("main").style.marginLeft = "0";
-   document.getElementById("main").style.display = "block"
+   document.getElementById("main").style.display = "flex"
 }
 
 function addQuestion(){
