@@ -86,6 +86,11 @@ app.post("/addQuestion/id/:id", (req, res) => {
   });
 });
 
+app.get('/auth/facebook',(req,res)=>{
+  res.send("Not ready use google login")
+}
+);
+
 app.use(function (req, res, next) {
   res.status(404).send("Sorry can't find that!");
 });
